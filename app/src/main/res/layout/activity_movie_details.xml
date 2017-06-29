@@ -7,6 +7,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center">
+            <ProgressBar
+                android:id="@+id/image_loading_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                style="?android:attr/progressBarStyleSmall"/>
+            <TextView
+                android:id="@+id/no_image_found"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="No Image Found"
+                android:textSize="14sp"
+                android:textColor="#ff0000"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:id="@+id/poster"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"/>
+        </FrameLayout>
+
+
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
@@ -15,21 +46,72 @@
             android:text="Title"
             android:textStyle="bold"
             android:gravity="center"
-            android:layout_gravity="center"/>
-        <TextView
-            android:id="@+id/original_title"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"/>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:text="original_title"
-            android:gravity="center"
-            android:layout_gravity="center"/>
-        <ImageView
-            android:id="@+id/poster"
-            android:layout_width="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Original title:"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:layout_marginLeft="5dp"/>
+            <TextView
+                android:id="@+id/original_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_marginLeft="5dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_gravity="center"/>
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Release date:"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:layout_marginLeft="5dp"/>
+            <TextView
+                android:id="@+id/release_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="date"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Overview:"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:layout_marginLeft="5dp"/>
+            <TextView
+                android:id="@+id/overview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="overview"
+                android:maxLines="3"
+                android:gravity="left"
+                android:layout_gravity="center_vertical|left"
+                android:layout_marginLeft="5dp"/>
+        </LinearLayout>
 
     </LinearLayout>
 
