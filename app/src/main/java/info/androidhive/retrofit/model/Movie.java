@@ -1,5 +1,8 @@
 package info.androidhive.retrofit.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -166,4 +169,26 @@ public class Movie {
     public void setVoteAverage(Double voteAverage) {
         this.voteAverage = voteAverage;
     }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "posterPath='" + posterPath + '\'' +
+                ", adult=" + adult +
+                ", overview='" + overview + '\'' +
+                ", releaseDate='" + releaseDate + '\'' +
+                ", genreIds=" + genreIds +
+                ", id=" + id +
+                ", originalTitle='" + originalTitle + '\'' +
+                ", originalLanguage='" + originalLanguage + '\'' +
+                ", title='" + title + '\'' +
+                ", backdropPath='" + backdropPath + '\'' +
+                ", popularity=" + popularity +
+                ", voteCount=" + voteCount +
+                ", video=" + video +
+                ", voteAverage=" + voteAverage +
+                '}';
+    }
+
+
 }

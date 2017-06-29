@@ -1,6 +1,8 @@
 package info.androidhive.retrofit.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import info.androidhive.retrofit.R;
+import info.androidhive.retrofit.activity.MovieDetailActivity;
 import info.androidhive.retrofit.model.Movie;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewHolder> {
@@ -58,6 +61,18 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
         holder.data.setText(movies.get(position).getReleaseDate());
         holder.movieDescription.setText(movies.get(position).getOverview());
         holder.rating.setText(movies.get(position).getVoteAverage().toString());
+
+        holder.moviesLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Movie m = movies.get(position);
+                Intent i = new Intent(context, MovieDetailActivity.class);
+                i.putExtra("title", m.getTitle());
+                i.putExtra("posterPath", m.getPosterPath());
+                i.putExtra("originalTitle", m.getOriginalTitle());
+                context.startActivity(i);
+            }
+        });
     }
 
     @Override
