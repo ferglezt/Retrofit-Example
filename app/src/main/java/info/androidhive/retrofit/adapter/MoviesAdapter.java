@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import info.androidhive.retrofit.R;
@@ -57,17 +58,33 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
 
     @Override
     public void onBindViewHolder(MovieViewHolder holder, final int position) {
-        holder.movieTitle.setText(movies.get(position).getTitle());
-        holder.data.setText(movies.get(position).getReleaseDate());
-        holder.movieDescription.setText(movies.get(position).getOverview());
-        holder.rating.setText(movies.get(position).getVoteAverage().toString());
+        final Movie m = movies.get(position);
+
+        holder.movieTitle.setText(m.getTitle());
+        holder.data.setText(m.getReleaseDate());
+        holder.movieDescription.setText(m.getOverview());
+        holder.rating.setText(m.getVoteAverage().toString());
 
         holder.moviesLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Movie m = movies.get(position);
                 Intent i = new Intent(context, MovieDetailActivity.class);
+
+                i.putExtra("posterPath", m.getPosterPath());
+                i.putExtra("adult", m.isAdult());
+                i.putExtra("overview", m.getOverview());
+                i.putExtra("releaseDate", m.getReleaseDate());
+                i.putIntegerArrayListExtra("genreIds", new ArrayList<>(m.getGenreIds()));
                 i.putExtra("id", m.getId());
+                i.putExtra("originalTitle", m.getOriginalTitle());
+                i.putExtra("originalLanguage", m.getOriginalLanguage());
+                i.putExtra("title", m.getTitle());
+                i.putExtra("backdropPath", m.getBackdropPath());
+                i.putExtra("popularity", m.getPopularity());
+                i.putExtra("voteCount", m.getVoteCount());
+                i.putExtra("video", m.getVideo());
+                i.putExtra("voteAverage", m.getVoteAverage());
+
                 context.startActivity(i);
             }
         });

@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.loading);
 
         loadTopRated();
-
     }
 
     protected void loadTopRated() {
@@ -55,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
 
                 List<Movie> movies = response.body().getResults();
                 setupRecyclerAdapter(movies);
-
             }
 
             @Override
@@ -79,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
                 setContentView(R.layout.activity_main);
-                setTitle(query);
                 ButterKnife.bind(MainActivity.this);
 
                 List<Movie> movies = response.body().getResults();

@@ -1,5 +1,6 @@
 package info.androidhive.retrofit.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -11,15 +12,12 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.Locale;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import info.androidhive.retrofit.R;
 import info.androidhive.retrofit.model.Movie;
-import info.androidhive.retrofit.rest.ApiClient;
-import info.androidhive.retrofit.rest.ApiInterface;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by fernando on 28/06/17
@@ -36,41 +34,47 @@ public class MovieDetailActivity extends AppCompatActivity {
     @Bind(R.id.original_title) TextView originalTitleTextView;
     @Bind(R.id.release_date) TextView releaseDateTextView;
     @Bind(R.id.overview) TextView overviewTextView;
+    @Bind(R.id.vote_average) TextView voteAverageTextView;
 
-    private boolean isOverViewExpanded = false;
+    private boolean isOverviewExpanded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.loading);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        int id = getIntent().getIntExtra("id", -1);
-
-        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-
-        Call<Movie> call = apiInterface.getMovieDetails(id, ApiClient.API_KEY);
-        call.enqueue(new Callback<Movie>() {
-            @Override
-            public void onResponse(Call<Movie> call, Response<Movie> response) {
-                Movie m = response.body();
-                setupMovieDetails(m);
-            }
-
-            @Override
-            public void onFailure(Call<Movie> call, Throwable t) {
-                Log.d(TAG, t.toString());
-                setContentView(R.layout.loading_error);
-            }
-        });
-
-    }
-
-    protected void setupMovieDetails(Movie m) {
         setContentView(R.layout.activity_movie_details);
         ButterKnife.bind(this);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Movie m = buildMovieFromIntent(getIntent());
+        Log.d(TAG, m.toString());
+        setupMovieDetails(m);
+    }
+
+    protected Movie buildMovieFromIntent(Intent i) {
+        String fullOriginalLanguage = new Locale(
+                i.getStringExtra("originalLanguage")
+        ).getDisplayLanguage();
+
+        return new Movie(
+                i.getStringExtra("posterPath"),
+                i.getBooleanExtra("adult", false),
+                i.getStringExtra("overview"),
+                i.getStringExtra("releaseDate"),
+                i.getIntegerArrayListExtra("genreIds"),
+                i.getIntExtra("id", -1),
+                i.getStringExtra("originalTitle"),
+                fullOriginalLanguage,
+                i.getStringExtra("title"),
+                i.getStringExtra("backdropPath"),
+                i.getDoubleExtra("popularity", -1),
+                i.getIntExtra("voteCount", -1),
+                i.getBooleanExtra("video", false),
+                i.getDoubleExtra("voteAverage", -1)
+        );
+    }
+
+    protected void setupMovieDetails(Movie m) {
         setTitle(m.getTitle());
 
         Picasso.with(this)
@@ -91,16 +95,18 @@ public class MovieDetailActivity extends AppCompatActivity {
         titleTextView.setText(m.getTitle());
         originalTitleTextView.setText(m.getOriginalTitle());
         releaseDateTextView.setText(m.getReleaseDate());
+        voteAverageTextView.setText(String.valueOf(m.getVoteAverage()));
+
         overviewTextView.setText(m.getOverview());
         overviewTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!isOverViewExpanded) {
+                if(!isOverviewExpanded) {
                     overviewTextView.setMaxLines(20);
                 } else {
                     overviewTextView.setMaxLines(3);
                 }
-                isOverViewExpanded = !isOverViewExpanded;
+                isOverviewExpanded = !isOverviewExpanded;
             }
         });
 
